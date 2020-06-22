@@ -1,16 +1,21 @@
-import React, { Component  } from 'react';
-import { Card  ,Button  } from 'antd';
+import React, { Component } from 'react';
+import { Card ,Button } from 'antd';
 import { connect } from 'dva';
 
 const namespace = 'puzzlecards'
 const mapStateToProps = (state) => {
-    const cardList = state[namespace];
+    const cardList = state[namespace].data;
     return {
         cardList,
     };
 };
 const mapDispatchToProps = (dispatch) => {
     return {
+        onDidMount: () => {
+            dispatch({
+                type: `${namespace}/queryInitCards`,
+            });
+        },
         onClickAdd: (newCard) => {
             const action = {
                 type: `${namespace}/addNewCard`,
@@ -22,13 +27,13 @@ const mapDispatchToProps = (dispatch) => {
 }
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PuzzleCardsPage extends Component {
-    constructor(props) {
-        super(props);
-        console.log(props);
-        // console.log(props.cardList);
-        }
-    // export default class PuzzleCardsPage extends Component {
-    // props;
+    // constructor(props) {
+    //     super(props);
+    //     console.log(props);
+    //     }
+    componentDidMount() {
+        this.props.onDidMount();
+    }
     render() {
         return (
             <div>

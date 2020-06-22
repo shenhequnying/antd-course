@@ -18,6 +18,10 @@ export default {
                 component: './HelloWorld',
             },
             {
+                path: 'list',
+                component: '../pages/list'
+            },
+            {
                 path: '/dashboard',
                 routes: [
                     {path: '/dashboard/analysis', component: 'Dashboard/Analysis'},
