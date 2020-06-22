@@ -4,7 +4,7 @@ import { connect } from 'dva';
 
 const namespace = 'puzzlecards'
 const mapStateToProps = (state) => {
-    const cardList = state['puzzlecards'].data;
+    const cardList = state[namespace];
     return {
         cardList,
     };
