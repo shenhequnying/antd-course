@@ -28,6 +28,13 @@ export default {
                     {path: '/dashboard/monitor', component: 'Dashboard/Monitor'},
                     {path: '/dashboard/workplace', component: 'Dashboard/Workplace'},
                 ]
+            },
+            {
+                path: '/sqltool',
+                routes: [
+                    {path: '/sqltool/discovery', component: 'SqlTool/Discovery'},
+                    {path: '/sqltool/product_item', component: 'SqlTool/Product_Item'},
+                ]
             }
             ]
     }],
