@@ -10,6 +10,10 @@ export default {
         component: '../layout',
         routes: [
             {
+              path: '/',
+              component: '../pages/index',
+            },
+            {
                 path: 'puzzlecards',
                 component: './puzzlecards',
             },

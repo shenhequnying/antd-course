@@ -1,0 +1,10 @@
+实现功能:
+直播间更改:
+live_studio_style_info studio_id 关联base_studio_info 中的主键
+其他参考表字段说明即可
+实现功能：
+1. 根据stuio_id 映射出的名称，进行搜索，
+然后对stuio_status\is_delete 字段进行修改。
+
+2. 增加一条新的字段，可以添加新的一条信息。根据参考字段和stuio_id 设计即可。
+stuio_id 设计为可以进行简单的模糊搜索。
