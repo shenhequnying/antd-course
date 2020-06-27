@@ -80,7 +80,6 @@ class EditableTable extends React.Component {
     }
 
     isEditing = (record) => {
-        console.log("看看过程中我是不是变了====", this.state)
         const { editingKey } = this.state;
         return record.key === editingKey;
     };
@@ -119,7 +118,6 @@ class EditableTable extends React.Component {
                     ...row,
                 });
                 this.setState({ data: newData, editingKey: '' });
-                // this.setState({ data: newData});
             } else {
                 newData.push(row);
                 this.setState({ data: newData, editingKey: '' });
@@ -145,8 +143,8 @@ class EditableTable extends React.Component {
             age: '',
             address: '',
         };
-        // console.log(data);
-        // console.log(row);
+        console.log(data);
+        console.log(row);
         const newData = data;
         newData.splice(data.length, 1, row);
         this.setState({ data: newData, editingKey: key });

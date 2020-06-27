@@ -26,6 +26,14 @@ export default {
                 component: '../pages/list'
             },
             {
+                path: 'test_edit_table',
+                component: '../pages/test'
+            },
+            {
+                path: 'fuck_edit_table',
+                component: '../pages/test2'
+            },
+            {
                 path: '/dashboard',
                 routes: [
                     {path: '/dashboard/analysis', component: 'Dashboard/Analysis'},
