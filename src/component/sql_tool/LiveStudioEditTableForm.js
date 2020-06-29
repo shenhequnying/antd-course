@@ -11,18 +11,16 @@ import {
   Modal,
 } from "antd";
 import PropTypes from "prop-types";
-import { Tabledata } from "./TableData";
-import { EditableContext } from "./TableContext";
-import EditableCell from "./EditableCell";
+import { EditableContext } from "@/component/edit_table/TableContext";
+import EditableCell from "@/component/edit_table/EditableCell";
 import { connect } from "dva";
 
-const namespace = "discovery";
+const namespace = "livestudio";
 function mapStateToProps(state) {
   return {
     //这里就是return model中获取的state到prop中
-    discovery_list: state.discovery.discovery_list,
-    discoveryLoading: state.loading.effects["discovery/queryList"],
-    editingKey: state.discovery.editingKey,
+    livestudio_list: state.livestudio.livestudio_list,
+    livestudioLoading: state.loading.effects["livestudio/queryList"],
   };
 }
 
@@ -43,11 +41,11 @@ const mapDispatchToProps = (dispatch) => {
       };
       dispatch(action);
     },
-    search: (item_no) => {
-      //   console.log("我是mapstate部分，我被调用了====", item_no);
+    search: (studio_id) => {
+      console.log("我是mapstate部分，我被调用了====", studio_id);
       const action = {
         type: `${namespace}/search`,
-        payload: { item_no },
+        payload: { studio_id },
       };
       dispatch(action);
     },
@@ -61,7 +59,7 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-class EditableTable_new extends React.Component {
+class LiveStudioEditTableForm extends React.Component {
   componentDidMount() {
     this.props.onDidMount();
   }
@@ -69,28 +67,85 @@ class EditableTable_new extends React.Component {
     super(props);
     this.state = {
       //数据来源
-      // data: discovery_list,
-      editingKey: this.props.editingKey,
+      editingKey: "",
       modalvisible: false,
     };
     this.columns = [
       {
-        title: "item_no",
-        dataIndex: "item_no",
-        width: "25%",
+        title: "工作室编号",
+        dataIndex: "studio_id",
+        width: "8%",
+        editable: true,
+        fixed: "left",
+      },
+      {
+        title: "直播跳转类型",
+        dataIndex: "live_type",
+        width: "8%",
+        editable: true,
+        fixed: "left",
+      },
+      {
+        title: "重播跳转类型",
+        dataIndex: "replay_type",
+        // width: "10%",
         editable: true,
       },
       {
-        title: "target_group_id",
-        dataIndex: "target_group_id",
-        width: "15%",
+        title: "live_show_voucher",
+        dataIndex: "live_show_voucher",
+        render: (val) => (val ? "开" : "关"),
+        width: "10%",
         editable: true,
       },
       {
-        title: "item_label",
-        dataIndex: "item_label",
-        width: "40%",
-        editable: false,
+        title: "live_singleday_rank_show",
+        dataIndex: "live_singleday_rank_show",
+        render: (val) => (val ? "开" : "关"),
+        // width: "10%",
+        editable: true,
+      },
+      {
+        title: "replay_show_deposit",
+        dataIndex: "replay_show_deposit",
+        render: (val) => (val ? "开" : "关"),
+        // width: "10%",
+        editable: true,
+      },
+      {
+        title: "live_auto_popup",
+        dataIndex: "live_auto_popup",
+        render: (val) => (val ? "开" : "关"),
+        // width: "10%",
+        editable: true,
+      },
+      {
+        title: "replay_show_coupon",
+        dataIndex: "replay_show_coupon",
+        render: (val) => (val ? "开" : "关"),
+        // width: "10%",
+        editable: true,
+      },
+      {
+        title: "live_minimize",
+        dataIndex: "live_minimize",
+        render: (val) => (val ? "开" : "关"),
+        // width: "10%",
+        editable: true,
+      },
+      {
+        title: "replay_show_product",
+        dataIndex: "replay_show_product",
+        render: (val) => (val ? "开" : "关"),
+        // width: "10%",
+        editable: true,
+      },
+      {
+        title: "replay_show_atmosphere",
+        dataIndex: "replay_show_atmosphere",
+        render: (val) => (val ? "开" : "关"),
+        width: "8%",
+        editable: true,
       },
       {
         title: "operation",
@@ -143,6 +198,8 @@ class EditableTable_new extends React.Component {
             </button>
           );
         },
+        fixed: "right",
+        width: "7%",
       },
     ];
   }
@@ -204,6 +261,7 @@ class EditableTable_new extends React.Component {
   };
 
   edit = (key) => {
+    console.log("我被点击了！！！");
     this.setState({ editingKey: key });
   };
 
@@ -232,19 +290,11 @@ class EditableTable_new extends React.Component {
     // console.log("我被调用了====onfinish");
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // console.log("Received values of form: ", values);
+        console.log("Received values of form: ", values);
         this.props.search(values);
         // console.log("我只能被调用一次?");
         this.props.form.resetFields();
       }
-      //   console.log("Received values of form: ", values);
-      //   this.props.search(values);
-      //   console.log("我只能被调用一次?");
-      //   if (!err) {
-      //     console.log("Received values of form: ", values);
-      //     this.props.search(values);
-      //     console.log("我只能被调用一次?");
-      //   }
     });
   };
   onFinishFailed = (errorInfo) => {
@@ -257,13 +307,13 @@ class EditableTable_new extends React.Component {
     //   this.props.discovery_list,
     //   this.state.editingKey
     // );
-    console.log("editkey", this.state.editingKey);
+    console.log("editkey_in_live_studio=====", this.state.editingKey);
     const components = {
       body: {
         cell: EditableCell,
       },
     };
-    const { discovery_list, discoveryLoading, form } = this.props;
+    const { livestudio_list, livestudioLoading, form } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { modalvisible } = this.state;
     const columns = this.columns.map((col) => {
@@ -295,14 +345,14 @@ class EditableTable_new extends React.Component {
           onCancel={this.cancel_modal}
         >
           <Form>
-            <Form.Item label="item_no">
-              {getFieldDecorator("item_no")(<Input />)}
+            <Form.Item label="studio_id">
+              {getFieldDecorator("studio_id")(<Input />)}
             </Form.Item>
-            <Form.Item label="target_group_id">
-              {getFieldDecorator("target_group_id")(<Input />)}
+            <Form.Item label="live_type">
+              {getFieldDecorator("live_type")(<Input />)}
             </Form.Item>
-            <Form.Item label="item_label">
-              {getFieldDecorator("item_label")(<Input />)}
+            <Form.Item label="replay_type">
+              {getFieldDecorator("replay_type")(<Input />)}
             </Form.Item>
           </Form>
         </Modal>
@@ -311,8 +361,10 @@ class EditableTable_new extends React.Component {
           <Table
             components={components}
             bordered
-            dataSource={discovery_list}
-            loading={discoveryLoading}
+            dataSource={livestudio_list}
+            bordered
+            scroll={{ x: 1300 }}
+            loading={livestudioLoading}
             columns={columns}
             rowClassName="editable-row"
             pagination={{
@@ -337,8 +389,8 @@ class EditableTable_new extends React.Component {
                 {/* {getFieldDecorator("item_no_input", {
                   rules: [{ required: true, message: "请输入item no" }],
                 })(<Input placeholder="item_no" />)} */}
-                {getFieldDecorator("item_no_input")(
-                  <Input placeholder="item_no" />
+                {getFieldDecorator("studio_id_input")(
+                  <Input placeholder="studio_id" />
                 )}
               </Form.Item>
             </Col>
@@ -360,10 +412,13 @@ class EditableTable_new extends React.Component {
   }
 }
 
-const EditableFormTable = Form.create()(EditableTable_new);
+const LiveStudioEditTable = Form.create()(LiveStudioEditTableForm);
 // export default connect(mapStateToProps)(EditableFormTable);
-export default connect(mapStateToProps, mapDispatchToProps)(EditableFormTable);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LiveStudioEditTable);
 
-EditableTable_new.propTypes = {
+LiveStudioEditTableForm.propTypes = {
   form: PropTypes.object,
 };

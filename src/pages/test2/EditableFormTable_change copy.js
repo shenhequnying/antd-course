@@ -101,7 +101,7 @@ class EditableTable_new extends React.Component {
           // console.log("我输出下，当前的state信息吧", this.state)
           const { editingKey } = this.state;
           const editable = this.isEditing(record);
-          //   console.log("编辑按钮的状态为----", editable);
+          console.log("编辑按钮的状态为----", editable);
           //编辑按钮的状态
           return editable ? (
             <span>
@@ -161,7 +161,6 @@ class EditableTable_new extends React.Component {
       //   if (!err) {
       this.props.addOne(values);
       this.setState({ modalvisible: false });
-      this.props.form.resetFields();
       //   }
       //   if (!err) {
       // this.props.addOne(values);
@@ -177,7 +176,6 @@ class EditableTable_new extends React.Component {
   };
   cancel_modal = () => {
     this.setState({ modalvisible: false });
-    this.props.form.resetFields();
   };
   cancel = (key) => {
     // console.log(key, "this is key...")
@@ -229,13 +227,12 @@ class EditableTable_new extends React.Component {
   };
   onFinish = (e) => {
     e.preventDefault();
-    // console.log("我被调用了====onfinish");
+    console.log("我被调用了====onfinish");
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // console.log("Received values of form: ", values);
+        console.log("Received values of form: ", values);
         this.props.search(values);
-        // console.log("我只能被调用一次?");
-        this.props.form.resetFields();
+        console.log("我只能被调用一次?");
       }
       //   console.log("Received values of form: ", values);
       //   this.props.search(values);
@@ -257,7 +254,6 @@ class EditableTable_new extends React.Component {
     //   this.props.discovery_list,
     //   this.state.editingKey
     // );
-    console.log("editkey", this.state.editingKey);
     const components = {
       body: {
         cell: EditableCell,
@@ -296,13 +292,19 @@ class EditableTable_new extends React.Component {
         >
           <Form>
             <Form.Item label="item_no">
-              {getFieldDecorator("item_no")(<Input />)}
+              {getFieldDecorator("item_no", {
+                rules: [{ required: true }],
+              })(<Input />)}
             </Form.Item>
             <Form.Item label="target_group_id">
-              {getFieldDecorator("target_group_id")(<Input />)}
+              {getFieldDecorator("target_group_id", {
+                rules: [{ required: true }],
+              })(<Input />)}
             </Form.Item>
             <Form.Item label="item_label">
-              {getFieldDecorator("item_label")(<Input />)}
+              {getFieldDecorator("item_label", {
+                rules: [{ required: true }],
+              })(<Input />)}
             </Form.Item>
           </Form>
         </Modal>
@@ -320,41 +322,38 @@ class EditableTable_new extends React.Component {
             }}
             rowKey="id"
           />
+          <Row gutter={12}>
+            <Col span={6}>
+              <Button
+                onClick={this.showModal}
+                type="primary"
+                style={{ marginBottom: 16 }}
+              >
+                添加一行
+              </Button>
+            </Col>
+            <Form onSubmit={this.onFinish}>
+              <Col span={5}>
+                <Form.Item>
+                  {getFieldDecorator("item_no_input", {
+                    rules: [{ required: true, message: "请输入item no" }],
+                  })(<Input placeholder="item_no" />)}
+                </Form.Item>
+              </Col>
+              <Col span={5}>
+                <Form.Item>
+                  <Button
+                    htmlType="submit"
+                    type="primary"
+                    style={{ marginBottom: 16 }}
+                  >
+                    搜索
+                  </Button>
+                </Form.Item>
+              </Col>
+            </Form>
+          </Row>
         </EditableContext.Provider>
-        <Row gutter={12}>
-          <Col span={6}>
-            <Button
-              onClick={this.showModal}
-              type="primary"
-              style={{ marginBottom: 16 }}
-            >
-              添加一行
-            </Button>
-          </Col>
-          <Form onSubmit={this.onFinish}>
-            <Col span={5}>
-              <Form.Item>
-                {/* {getFieldDecorator("item_no_input", {
-                  rules: [{ required: true, message: "请输入item no" }],
-                })(<Input placeholder="item_no" />)} */}
-                {getFieldDecorator("item_no_input")(
-                  <Input placeholder="item_no" />
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={5}>
-              <Form.Item>
-                <Button
-                  htmlType="submit"
-                  type="primary"
-                  style={{ marginBottom: 16 }}
-                >
-                  搜索
-                </Button>
-              </Form.Item>
-            </Col>
-          </Form>
-        </Row>
       </div>
     );
   }

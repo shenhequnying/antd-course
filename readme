@@ -8,3 +8,11 @@ live_studio_style_info studio_id 关联base_studio_info 中的主键
 
 2. 增加一条新的字段，可以添加新的一条信息。根据参考字段和stuio_id 设计即可。
 stuio_id 设计为可以进行简单的模糊搜索。
+//这里需要设计成模糊搜索？那有点难度了
+
+用户五张表:
+1. 用户一张表
+2. 角色表
+3. 权限表
+4. 用户角色表 id userid roleid
+5. 角色权限表 id roleid privilegeid 
