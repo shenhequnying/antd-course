@@ -7,8 +7,8 @@ export function queryList() {
 
 export function update(id, data) {
   // console.log("我在service里，传过来的id值为:",id)
-  // console.log("我在service里，传过来的form值为:",data)
-  return request(`http://127.0.0.1:5000/product_discovery_single/${id}`, {
+  console.log("我在service里，传过来的form值为:", data);
+  return request(`http://127.0.0.1:5000/live_studio_style_info_single/${id}`, {
     // return request(`http://172.16.109.99:5000/product_discovery_single/${id}`, {
     headers: {
       "content-type": "application/json",

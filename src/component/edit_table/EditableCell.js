@@ -25,8 +25,33 @@ class EditableCell extends React.Component {
       // console.log()
       return (
         <Select
-          defaultValue={this.props.record[dataIndex] - 1}
-          style={{ width: 60 }}
+        // defaultValue="老版样式"
+        // style={{ width: "10%" }}
+        // placeholder={default_value}
+        >
+          <Option value="1">"老版样式"</Option>
+          <Option value="2">"新版样式"</Option>
+          <Option value="3">"小程序SDK"</Option>
+        </Select>
+      );
+    }
+    if (dataIndex === "replay_type") {
+      //直播跳转类型1 老版样式 2 新版样式 3 小程序SDK
+      const replay_types = ["老版样式", "新版样式"];
+
+      const default_value = replay_types[this.props.record[dataIndex] - 1];
+      console.log(
+        "输出下这里，看看是不是正常====",
+        this.props.record[dataIndex] - 1,
+        "===",
+        default_value
+      );
+      // console.log()
+      return (
+        <Select
+        // defaultValue="老版样式"
+        // style={{ width: "10%" }}
+        // placeholder={default_value}
         >
           <Option value="1">"老版样式"</Option>
           <Option value="2">"新版样式"</Option>
@@ -48,10 +73,17 @@ class EditableCell extends React.Component {
       // const x_value = this.props.record;
       // console.log(x_value);
       // console.log("输出一下这里吧，看看状态怎么样", x_value[dataIndex]);
-      let check_default_value = this.props.record[dataIndex];
-      if (check_default_value == null) {
+      let check_default_value = true;
+      if (
+        (this.props.record[dataIndex] == null) |
+        (this.props.record[dataIndex] == 0)
+      ) {
         check_default_value = false;
       }
+      // let check_default_value = this.props.record[dataIndex];
+      // if (check_default_value == null) {
+      //   check_default_value = false;
+      // }
       return (
         <Switch
           checkedChildren="开"

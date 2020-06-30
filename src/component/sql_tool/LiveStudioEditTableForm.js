@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   Modal,
+  Switch,
 } from "antd";
 import PropTypes from "prop-types";
 import { EditableContext } from "@/component/edit_table/TableContext";
@@ -75,77 +76,208 @@ class LiveStudioEditTableForm extends React.Component {
         title: "工作室编号",
         dataIndex: "studio_id",
         width: "8%",
-        editable: true,
-        fixed: "left",
+        editable: false,
+        // fixed: "left",
+        // render: (text) => <p color={"green"}>{text}</p>,
+        render: (text) => {
+          return {
+            props: {
+              style: { color: "blue" },
+            },
+            children: <div>{text}</div>,
+          };
+        },
       },
       {
         title: "直播跳转类型",
         dataIndex: "live_type",
         width: "8%",
         editable: true,
-        fixed: "left",
+        render: (text) => {
+          const slive_types = ["老版样式", "新版样式", "小程序SDK"];
+          return {
+            props: {
+              style: { color: "green" },
+            },
+            children: <div>{slive_types[text - 1]}</div>,
+          };
+        },
+        // fixed: "left",
       },
       {
         title: "重播跳转类型",
         dataIndex: "replay_type",
         // width: "10%",
         editable: true,
+        render: (text) => {
+          const slive_types = ["老版样式", "新版样式", "小程序SDK"];
+          return {
+            props: {
+              style: { color: "green" },
+            },
+            children: <div>{slive_types[text - 1]}</div>,
+          };
+        },
       },
       {
         title: "live_show_voucher",
         dataIndex: "live_show_voucher",
-        render: (val) => (val ? "开" : "关"),
+        // render: (val) => (val ? "开" : "关"),
         width: "10%",
         editable: true,
+        render: (text) => {
+          let check_default_value = true;
+          if ((text == null) | (text == 0)) {
+            check_default_value = false;
+          } else {
+            check_default_value = true;
+          }
+          return {
+            children: (
+              <Switch disabled={true} defaultChecked={check_default_value} />
+            ),
+          };
+        },
       },
       {
         title: "live_singleday_rank_show",
         dataIndex: "live_singleday_rank_show",
-        render: (val) => (val ? "开" : "关"),
+        // render: (val) => (val ? "开" : "关"),
         // width: "10%",
         editable: true,
+        render: (text) => {
+          let check_default_value = text;
+          if ((text == null) | (text == 0)) {
+            check_default_value = false;
+          } else {
+            check_default_value = true;
+          }
+          return {
+            children: (
+              <Switch disabled={true} defaultChecked={check_default_value} />
+            ),
+          };
+        },
       },
       {
         title: "replay_show_deposit",
         dataIndex: "replay_show_deposit",
-        render: (val) => (val ? "开" : "关"),
+        // render: (val) => (val ? "开" : "关"),
         // width: "10%",
         editable: true,
+        render: (text) => {
+          let check_default_value = true;
+          if ((text == null) | (text == 0)) {
+            check_default_value = false;
+          } else {
+            check_default_value = true;
+          }
+          return {
+            children: (
+              <Switch disabled={true} defaultChecked={check_default_value} />
+            ),
+          };
+        },
       },
       {
         title: "live_auto_popup",
         dataIndex: "live_auto_popup",
-        render: (val) => (val ? "开" : "关"),
+        // render: (val) => (val ? "开" : "关"),
         // width: "10%",
         editable: true,
+        render: (text) => {
+          let check_default_value = text;
+          if ((text == null) | (text == 0)) {
+            check_default_value = false;
+          } else {
+            check_default_value = true;
+          }
+          return {
+            children: (
+              <Switch disabled={true} defaultChecked={check_default_value} />
+            ),
+          };
+        },
       },
       {
         title: "replay_show_coupon",
         dataIndex: "replay_show_coupon",
-        render: (val) => (val ? "开" : "关"),
+        // render: (val) => (val ? "开" : "关"),
         // width: "10%",
         editable: true,
+        render: (text) => {
+          let check_default_value = true;
+          if ((text == null) | (text == 0)) {
+            check_default_value = false;
+          } else {
+            check_default_value = true;
+          }
+          return {
+            children: (
+              <Switch disabled={true} defaultChecked={check_default_value} />
+            ),
+          };
+        },
       },
       {
         title: "live_minimize",
         dataIndex: "live_minimize",
-        render: (val) => (val ? "开" : "关"),
+        // render: (val) => (val ? "开" : "关"),
         // width: "10%",
         editable: true,
+        render: (text) => {
+          let check_default_value = true;
+          if ((text == null) | (text == 0)) {
+            check_default_value = false;
+          } else {
+            check_default_value = true;
+          }
+          return {
+            children: (
+              <Switch disabled={true} defaultChecked={check_default_value} />
+            ),
+          };
+        },
       },
       {
         title: "replay_show_product",
         dataIndex: "replay_show_product",
-        render: (val) => (val ? "开" : "关"),
+        // render: (val) => (val ? "开" : "关"),
         // width: "10%",
         editable: true,
+        render: (text) => {
+          let check_default_value = text;
+          if ((text == null) | (text == 0)) {
+            check_default_value = false;
+          } else {
+            check_default_value = true;
+          }
+          return {
+            children: (
+              <Switch disabled={true} defaultChecked={check_default_value} />
+            ),
+          };
+        },
       },
       {
         title: "replay_show_atmosphere",
         dataIndex: "replay_show_atmosphere",
-        render: (val) => (val ? "开" : "关"),
+        // render: (val) => (val ? "开" : "关"),
         width: "8%",
         editable: true,
+        render: (text) => {
+          let check_default_value = true;
+          if ((text == null) | (text == 0)) {
+            check_default_value = false;
+          } else {
+            check_default_value = true;
+          }
+          return {
+            children: (
+              <Switch disabled={true} defaultChecked={check_default_value} />
+            ),
+          };
+        },
       },
       {
         title: "operation",
@@ -373,8 +505,9 @@ class LiveStudioEditTableForm extends React.Component {
             rowKey="id"
           />
         </EditableContext.Provider>
-        <Row gutter={12}>
+        <Row gutter={20}>
           <Col span={6}>
+            <div></div>
             <Button
               onClick={this.showModal}
               type="primary"
@@ -384,7 +517,7 @@ class LiveStudioEditTableForm extends React.Component {
             </Button>
           </Col>
           <Form onSubmit={this.onFinish}>
-            <Col span={5}>
+            <Col span={8}>
               <Form.Item>
                 {/* {getFieldDecorator("item_no_input", {
                   rules: [{ required: true, message: "请输入item no" }],
@@ -394,7 +527,7 @@ class LiveStudioEditTableForm extends React.Component {
                 )}
               </Form.Item>
             </Col>
-            <Col span={5}>
+            <Col span={8}>
               <Form.Item>
                 <Button
                   htmlType="submit"
