@@ -15,7 +15,9 @@ class EditableCell extends React.Component {
       //直播跳转类型1 老版样式 2 新版样式 3 小程序SDK
       const slive_types = ["老版样式", "新版样式", "小程序SDK"];
 
-      const default_value = slive_types[this.props.record[dataIndex] - 1];
+      // const default_value = slive_types[this.props.record[dataIndex] - 1];
+      const default_value = this.props.record[dataIndex].toString();
+      // const default_value = this.props.record[dataIndex] - 1).toString();
       console.log(
         "输出下这里，看看是不是正常====",
         this.props.record[dataIndex] - 1,
@@ -25,9 +27,11 @@ class EditableCell extends React.Component {
       // console.log()
       return (
         <Select
-        // defaultValue="老版样式"
+        // defaultValue={default_value}
         // style={{ width: "10%" }}
         // placeholder={default_value}
+
+        // value={this.props.record[dataIndex] - 1}
         >
           <Option value="1">"老版样式"</Option>
           <Option value="2">"新版样式"</Option>
@@ -37,7 +41,7 @@ class EditableCell extends React.Component {
     }
     if (dataIndex === "replay_type") {
       //直播跳转类型1 老版样式 2 新版样式 3 小程序SDK
-      const replay_types = ["老版样式", "新版样式"];
+      const replay_types = ["老版样式", "新版样式", "小程序SDK"];
 
       const default_value = replay_types[this.props.record[dataIndex] - 1];
       console.log(
@@ -52,6 +56,7 @@ class EditableCell extends React.Component {
         // defaultValue="老版样式"
         // style={{ width: "10%" }}
         // placeholder={default_value}
+        // value={default_value}
         >
           <Option value="1">"老版样式"</Option>
           <Option value="2">"新版样式"</Option>

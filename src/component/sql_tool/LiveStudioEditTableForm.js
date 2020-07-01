@@ -10,6 +10,8 @@ import {
   Col,
   Modal,
   Switch,
+  Select,
+  // Switch,
 } from "antd";
 import PropTypes from "prop-types";
 import { EditableContext } from "@/component/edit_table/TableContext";
@@ -64,6 +66,10 @@ class LiveStudioEditTableForm extends React.Component {
   componentDidMount() {
     this.props.onDidMount();
   }
+  // shouldComponentUpdate() {
+  //   console.log("我是生命周期函数should，我被调用了====");
+  //   this.forceUpdate();
+  // }
   constructor(props) {
     super(props);
     this.state = {
@@ -341,6 +347,8 @@ class LiveStudioEditTableForm extends React.Component {
     this.props.save(id, form);
     console.log("先调用我，再调用props里的dispatch函数-----");
     this.setState({ editingKey: "" });
+    this.forceUpdate();
+    console.log("我被执行了?");
   };
   saveModal = () => {
     const {
@@ -475,16 +483,102 @@ class LiveStudioEditTableForm extends React.Component {
           visible={modalvisible}
           onOk={this.saveModal}
           onCancel={this.cancel_modal}
+          centered={true}
         >
           <Form>
             <Form.Item label="studio_id">
               {getFieldDecorator("studio_id")(<Input />)}
             </Form.Item>
-            <Form.Item label="live_type">
-              {getFieldDecorator("live_type")(<Input />)}
+            <Form.Item label="直播跳转类型">
+              {getFieldDecorator("live_type")(
+                <Select>
+                  <Option value="1">"老版样式"</Option>
+                  <Option value="2">"新版样式"</Option>
+                  <Option value="3">"小程序SDK"</Option>
+                </Select>
+              )}
             </Form.Item>
-            <Form.Item label="replay_type">
-              {getFieldDecorator("replay_type")(<Input />)}
+            <Form.Item label="重播跳转类型">
+              {getFieldDecorator("replay_type")(
+                <Select>
+                  <Option value="1">"老版样式"</Option>
+                  <Option value="2">"新版样式"</Option>
+                  <Option value="3">"小程序SDK"</Option>
+                </Select>
+              )}
+            </Form.Item>
+
+            <Form.Item label="live_show_voucher">
+              {getFieldDecorator("live_show_voucher")(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  // defaultChecked={check_default_value}
+                />
+              )}
+            </Form.Item>
+            <Form.Item label="live_auto_popup">
+              {getFieldDecorator("live_auto_popup")(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  // defaultChecked={check_default_value}
+                />
+              )}
+            </Form.Item>
+            <Form.Item label="live_minimize">
+              {getFieldDecorator("live_minimize")(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  // defaultChecked={check_default_value}
+                />
+              )}
+            </Form.Item>
+            <Form.Item label="live_singleday_rank_show">
+              {getFieldDecorator("live_singleday_rank_show")(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  // defaultChecked={check_default_value}
+                />
+              )}
+            </Form.Item>
+            <Form.Item label="replay_show_atmosphere">
+              {getFieldDecorator("replay_show_atmosphere")(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  // defaultChecked={check_default_value}
+                />
+              )}
+            </Form.Item>
+            <Form.Item label="replay_show_coupon">
+              {getFieldDecorator("replay_show_coupon")(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  // defaultChecked={check_default_value}
+                />
+              )}
+            </Form.Item>
+            <Form.Item label="replay_show_deposit">
+              {getFieldDecorator("replay_show_deposit")(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  // defaultChecked={check_default_value}
+                />
+              )}
+            </Form.Item>
+            <Form.Item label="replay_show_product">
+              {getFieldDecorator("replay_show_product")(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  // defaultChecked={check_default_value}
+                />
+              )}
             </Form.Item>
           </Form>
         </Modal>
