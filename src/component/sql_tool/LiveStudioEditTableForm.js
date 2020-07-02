@@ -24,6 +24,7 @@ function mapStateToProps(state) {
     //这里就是return model中获取的state到prop中
     livestudio_list: state.livestudio.livestudio_list,
     livestudioLoading: state.loading.effects["livestudio/queryList"],
+    basestudio_list: state.livestudio.basestudio_list,
   };
 }
 
@@ -80,12 +81,16 @@ class LiveStudioEditTableForm extends React.Component {
     this.columns = [
       {
         title: "工作室编号",
-        dataIndex: "studio_id",
+        dataIndex: "base_studio_info.studio_name",
+        // dataIndex: "studio_id",
         width: "8%",
         editable: false,
         // fixed: "left",
         // render: (text) => <p color={"green"}>{text}</p>,
         render: (text) => {
+          if (text == null) {
+            text = "暂无";
+          }
           return {
             props: {
               style: { color: "blue" },
@@ -94,6 +99,22 @@ class LiveStudioEditTableForm extends React.Component {
           };
         },
       },
+      // {
+      //   title: "工作室编号",
+      //   dataIndex: "studio_id",
+      //   width: "8%",
+      //   editable: false,
+      //   // fixed: "left",
+      //   // render: (text) => <p color={"green"}>{text}</p>,
+      //   render: (text) => {
+      //     return {
+      //       props: {
+      //         style: { color: "blue" },
+      //       },
+      //       children: <div>{text}</div>,
+      //     };
+      //   },
+      // },
       {
         title: "直播跳转类型",
         dataIndex: "live_type",
@@ -347,7 +368,8 @@ class LiveStudioEditTableForm extends React.Component {
     this.props.save(id, form);
     console.log("先调用我，再调用props里的dispatch函数-----");
     this.setState({ editingKey: "" });
-    this.forceUpdate();
+    //this.forceUpdate();
+    // this.props.onDidMount();
     console.log("我被执行了?");
   };
   saveModal = () => {
@@ -447,15 +469,47 @@ class LiveStudioEditTableForm extends React.Component {
     //   this.props.discovery_list,
     //   this.state.editingKey
     // );
-    console.log("editkey_in_live_studio=====", this.state.editingKey);
+    // console.log("editkey_in_live_studio=====", this.state.editingKey);
     const components = {
       body: {
         cell: EditableCell,
       },
     };
-    const { livestudio_list, livestudioLoading, form } = this.props;
+    const {
+      livestudio_list,
+      livestudioLoading,
+      form,
+      basestudio_list,
+    } = this.props;
+
     const { getFieldDecorator } = this.props.form;
     const { modalvisible } = this.state;
+    let DOM = basestudio_list.map((item) => (
+      <Select.Option value={item.id} key={item.id}>
+        {item.studio_name}
+      </Select.Option>
+    ));
+
+    // basestudio_list.forEach((item) => {
+    //   console.log("====", item);
+    // });
+    // console.log(
+    //   "我看看能不能拿到，live stuido info的值: ",
+    //   // basestudio_list,
+    //   typeof this.props.livestudio_list,
+    //   // this.props.livestudio_list,
+    //   DOM
+    //   // Object.values(basestudio_list)
+    // );
+    console.log(
+      "我看看能不能拿到，baseinfo的值: ",
+      DOM
+      // basestudio_list,
+      // typeof this.props.basestudio_list,
+      // this.props.basestudio_list
+      // Object.values(basestudio_list)
+    );
+    // console.log("输出  下生成的DOM，是什么个样子:", DOM);
     const columns = this.columns.map((col) => {
       if (!col.editable) {
         return col;
@@ -472,10 +526,7 @@ class LiveStudioEditTableForm extends React.Component {
         }),
       };
     });
-    // const { form } = this.props;
-    // const
 
-    // console.log("getFieldDecorator",getFieldDecorator)
     return (
       <div>
         <Modal
@@ -487,29 +538,32 @@ class LiveStudioEditTableForm extends React.Component {
         >
           <Form>
             <Form.Item label="studio_id">
-              {getFieldDecorator("studio_id")(<Input />)}
+              {getFieldDecorator("studio_id")(<Select>{DOM}</Select>)}
             </Form.Item>
             <Form.Item label="直播跳转类型">
               {getFieldDecorator("live_type")(
                 <Select>
-                  <Option value="1">"老版样式"</Option>
-                  <Option value="2">"新版样式"</Option>
-                  <Option value="3">"小程序SDK"</Option>
+                  <Select.Option value="1">"老版样式"</Select.Option>
+                  <Select.Option value="2">"新版样式"</Select.Option>
+                  <Select.Option value="3">"小程序SDK"</Select.Option>
                 </Select>
               )}
             </Form.Item>
             <Form.Item label="重播跳转类型">
               {getFieldDecorator("replay_type")(
                 <Select>
-                  <Option value="1">"老版样式"</Option>
-                  <Option value="2">"新版样式"</Option>
-                  <Option value="3">"小程序SDK"</Option>
+                  <Select.Option value="1">"老版样式"</Select.Option>
+                  <Select.Option value="2">"新版样式"</Select.Option>
+                  <Select.Option value="3">"小程序SDK"</Select.Option>
                 </Select>
               )}
             </Form.Item>
 
             <Form.Item label="live_show_voucher">
-              {getFieldDecorator("live_show_voucher")(
+              {getFieldDecorator("live_show_voucher", {
+                valuePropName: "checked",
+                initialValue: false,
+              })(
                 <Switch
                   checkedChildren="开"
                   unCheckedChildren="关"
@@ -518,7 +572,10 @@ class LiveStudioEditTableForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item label="live_auto_popup">
-              {getFieldDecorator("live_auto_popup")(
+              {getFieldDecorator("live_auto_popup", {
+                valuePropName: "checked",
+                initialValue: false,
+              })(
                 <Switch
                   checkedChildren="开"
                   unCheckedChildren="关"
@@ -527,7 +584,10 @@ class LiveStudioEditTableForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item label="live_minimize">
-              {getFieldDecorator("live_minimize")(
+              {getFieldDecorator("live_minimize", {
+                valuePropName: "checked",
+                initialValue: false,
+              })(
                 <Switch
                   checkedChildren="开"
                   unCheckedChildren="关"
@@ -536,7 +596,10 @@ class LiveStudioEditTableForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item label="live_singleday_rank_show">
-              {getFieldDecorator("live_singleday_rank_show")(
+              {getFieldDecorator("live_singleday_rank_show", {
+                valuePropName: "checked",
+                initialValue: false,
+              })(
                 <Switch
                   checkedChildren="开"
                   unCheckedChildren="关"
@@ -545,7 +608,10 @@ class LiveStudioEditTableForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item label="replay_show_atmosphere">
-              {getFieldDecorator("replay_show_atmosphere")(
+              {getFieldDecorator("replay_show_atmosphere", {
+                valuePropName: "checked",
+                initialValue: false,
+              })(
                 <Switch
                   checkedChildren="开"
                   unCheckedChildren="关"
@@ -554,7 +620,10 @@ class LiveStudioEditTableForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item label="replay_show_coupon">
-              {getFieldDecorator("replay_show_coupon")(
+              {getFieldDecorator("replay_show_coupon", {
+                valuePropName: "checked",
+                initialValue: false,
+              })(
                 <Switch
                   checkedChildren="开"
                   unCheckedChildren="关"
@@ -563,7 +632,10 @@ class LiveStudioEditTableForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item label="replay_show_deposit">
-              {getFieldDecorator("replay_show_deposit")(
+              {getFieldDecorator("replay_show_deposit", {
+                valuePropName: "checked",
+                initialValue: false,
+              })(
                 <Switch
                   checkedChildren="开"
                   unCheckedChildren="关"
@@ -572,7 +644,10 @@ class LiveStudioEditTableForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item label="replay_show_product">
-              {getFieldDecorator("replay_show_product")(
+              {getFieldDecorator("replay_show_product", {
+                valuePropName: "checked",
+                initialValue: false,
+              })(
                 <Switch
                   checkedChildren="开"
                   unCheckedChildren="关"
@@ -596,7 +671,7 @@ class LiveStudioEditTableForm extends React.Component {
             pagination={{
               onChange: this.cancel,
             }}
-            rowKey="id"
+            rowKey={(record) => record.id}
           />
         </EditableContext.Provider>
         <Row gutter={20}>

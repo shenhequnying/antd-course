@@ -27,11 +27,11 @@ class EditableCell extends React.Component {
       // console.log()
       return (
         <Select
-        // defaultValue={default_value}
-        // style={{ width: "10%" }}
-        // placeholder={default_value}
+          defaultValue={3}
+          // style={{ width: "10%" }}
+          // placeholder={default_value}
 
-        // value={this.props.record[dataIndex] - 1}
+          value={3}
         >
           <Option value="1">"老版样式"</Option>
           <Option value="2">"新版样式"</Option>
@@ -94,6 +94,7 @@ class EditableCell extends React.Component {
           checkedChildren="开"
           unCheckedChildren="关"
           defaultChecked={check_default_value}
+          // valuePropName="checked"
         />
       );
     }
@@ -122,6 +123,7 @@ class EditableCell extends React.Component {
                   message: `Please Input ${title}!`,
                 },
               ],
+              // valuePropName: "checked",
               initialValue: record[dataIndex],
             })(this.getInput(dataIndex))}
           </FormItem>

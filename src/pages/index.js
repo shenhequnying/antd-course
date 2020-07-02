@@ -1,3 +1,3 @@
 export default () => {
-    return <h1>Welcome to sql tool</h1>
-}
+  return <h1>Welcome to the tool platform</h1>;
+};

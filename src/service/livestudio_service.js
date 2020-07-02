@@ -4,6 +4,9 @@ export function queryList() {
   return request("http://127.0.0.1:5000/live_studio_style_infolist");
   // return request("http://172.16.109.99:5000/product_discoveryfilter");
 }
+export function queryBaseInfoList() {
+  return request("http://127.0.0.1:5000/base_studio_info_list");
+}
 
 export function update(id, data) {
   // console.log("我在service里，传过来的id值为:",id)
@@ -35,7 +38,7 @@ export function search(data) {
 
 export function addOne(data) {
   //   console.log("我被调用了？----");
-  return request(`http://127.0.0.1:5000/product_discovery_single_add`, {
+  return request(`http://127.0.0.1:5000/live_studio_style_infoadd`, {
     headers: {
       "content-type": "application/json",
     },
