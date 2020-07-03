@@ -117,8 +117,8 @@ class StudentQrCodeEditTableForm extends React.Component {
         },
       },
       {
-        title: "create_time",
-        dataIndex: "create_time",
+        title: "qrcode_url",
+        dataIndex: "qr_code_url",
         width: "20%",
         editable: false,
         render: (text) => {
@@ -126,7 +126,7 @@ class StudentQrCodeEditTableForm extends React.Component {
             props: {
               style: { color: "blue" },
             },
-            children: <div>{text}</div>,
+            children: <a>{text}</a>,
           };
         },
       },
