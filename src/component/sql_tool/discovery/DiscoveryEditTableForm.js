@@ -11,7 +11,6 @@ import {
   Modal,
 } from "antd";
 import PropTypes from "prop-types";
-import { Tabledata } from "./TableData";
 import { EditableContext } from "./TableContext";
 import EditableCell from "./EditableCell";
 import { connect } from "dva";
@@ -61,7 +60,8 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-class EditableTable_new extends React.Component {
+class DiscoveryEditTableForm extends React.Component {
+  // class EditableTable_new extends React.Component {
   componentDidMount() {
     this.props.onDidMount();
   }
@@ -224,6 +224,11 @@ class EditableTable_new extends React.Component {
   };
 
   showModal = () => {
+    const { data, editingKey } = this.state;
+    if (editingKey !== "") {
+      message.error("请先保存");
+      return;
+    }
     this.setState({ modalvisible: true });
   };
 
@@ -231,26 +236,6 @@ class EditableTable_new extends React.Component {
     this.setState({ editingKey: key });
   };
 
-  handleAdd = () => {
-    const { data, editingKey } = this.state;
-    if (editingKey !== "") {
-      message.error("请先保存");
-      return;
-    }
-    const key = new Date().toString();
-    const row = {
-      key,
-      name: "",
-      age: "",
-      address: "",
-    };
-    // console.log(data);
-    // console.log(row);
-    const newData = data;
-    newData.splice(data.length, 1, row);
-    this.setState({ data: newData, editingKey: key });
-    // console.log(newData);
-  };
   onFinish = (e) => {
     e.preventDefault();
     // console.log("我被调用了====onfinish");
@@ -346,7 +331,7 @@ class EditableTable_new extends React.Component {
           />
         </EditableContext.Provider>
         <Row gutter={12}>
-          <Col span={6}>
+          {/* <Col span={6}>
             <Button
               onClick={this.showModal}
               type="primary"
@@ -354,7 +339,7 @@ class EditableTable_new extends React.Component {
             >
               添加一行
             </Button>
-          </Col>
+          </Col> */}
           <Form onSubmit={this.onFinish}>
             <Col span={5}>
               <Form.Item>
@@ -384,10 +369,10 @@ class EditableTable_new extends React.Component {
   }
 }
 
-const EditableFormTable = Form.create()(EditableTable_new);
+const DiscoveryTableForm = Form.create()(DiscoveryEditTableForm);
 // export default connect(mapStateToProps)(EditableFormTable);
-export default connect(mapStateToProps, mapDispatchToProps)(EditableFormTable);
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoveryTableForm);
 
-EditableTable_new.propTypes = {
+DiscoveryEditTableForm.propTypes = {
   form: PropTypes.object,
 };

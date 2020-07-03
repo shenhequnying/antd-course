@@ -11,18 +11,18 @@ import {
   Modal,
 } from "antd";
 import PropTypes from "prop-types";
-import { Tabledata } from "./TableData";
+// import { Tabledata } from "./TableData";
 import { EditableContext } from "./TableContext";
 import EditableCell from "./EditableCell";
 import { connect } from "dva";
 
-const namespace = "discovery";
+const namespace = "student_qr_code";
 function mapStateToProps(state) {
   return {
     //这里就是return model中获取的state到prop中
-    discovery_list: state.discovery.discovery_list,
-    discoveryLoading: state.loading.effects["discovery/queryList"],
-    editingKey: state.discovery.editingKey,
+    student_qr_code_list: state.student_qr_code.student_qr_code_list,
+    student_qr_codeLoading: state.loading.effects["student_qr_code/queryList"],
+    editingKey: state.student_qr_code.editingKey,
   };
 }
 
@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-class EditableTable_new extends React.Component {
+class StudentQrCodeEditTableForm extends React.Component {
   componentDidMount() {
     this.props.onDidMount();
   }
@@ -78,19 +78,57 @@ class EditableTable_new extends React.Component {
         title: "item_no",
         dataIndex: "item_no",
         width: "25%",
-        editable: true,
-      },
-      {
-        title: "target_group_id",
-        dataIndex: "target_group_id",
-        width: "15%",
-        editable: true,
-      },
-      {
-        title: "item_label",
-        dataIndex: "item_label",
-        width: "40%",
         editable: false,
+        render: (text) => {
+          return {
+            props: {
+              style: { color: "blue" },
+            },
+            children: <div>{text}</div>,
+          };
+        },
+      },
+      {
+        title: "source",
+        dataIndex: "source",
+        width: "15%",
+        editable: false,
+        render: (text) => {
+          return {
+            props: {
+              style: { color: "green" },
+            },
+            children: <div>{text}</div>,
+          };
+        },
+      },
+      {
+        title: "group_id",
+        dataIndex: "group_id",
+        width: "20%",
+        editable: true,
+        render: (text) => {
+          return {
+            props: {
+              style: { color: "blue" },
+            },
+            children: <div>{text}</div>,
+          };
+        },
+      },
+      {
+        title: "create_time",
+        dataIndex: "create_time",
+        width: "20%",
+        editable: false,
+        render: (text) => {
+          return {
+            props: {
+              style: { color: "blue" },
+            },
+            children: <div>{text}</div>,
+          };
+        },
       },
       {
         title: "operation",
@@ -101,7 +139,7 @@ class EditableTable_new extends React.Component {
           // console.log("我输出下，当前的state信息吧", this.state)
           const { editingKey } = this.state;
           const editable = this.isEditing(record);
-          console.log("编辑按钮的状态为----", editable);
+          //   console.log("编辑按钮的状态为----", editable);
           //编辑按钮的状态
           return editable ? (
             <span>
@@ -161,6 +199,7 @@ class EditableTable_new extends React.Component {
       //   if (!err) {
       this.props.addOne(values);
       this.setState({ modalvisible: false });
+      this.props.form.resetFields();
       //   }
       //   if (!err) {
       // this.props.addOne(values);
@@ -176,6 +215,7 @@ class EditableTable_new extends React.Component {
   };
   cancel_modal = () => {
     this.setState({ modalvisible: false });
+    this.props.form.resetFields();
   };
   cancel = (key) => {
     // console.log(key, "this is key...")
@@ -198,6 +238,11 @@ class EditableTable_new extends React.Component {
   };
 
   showModal = () => {
+    const { data, editingKey } = this.state;
+    if (editingKey !== "") {
+      message.error("请先保存");
+      return;
+    }
     this.setState({ modalvisible: true });
   };
 
@@ -205,43 +250,16 @@ class EditableTable_new extends React.Component {
     this.setState({ editingKey: key });
   };
 
-  handleAdd = () => {
-    const { data, editingKey } = this.state;
-    if (editingKey !== "") {
-      message.error("请先保存");
-      return;
-    }
-    const key = new Date().toString();
-    const row = {
-      key,
-      name: "",
-      age: "",
-      address: "",
-    };
-    // console.log(data);
-    // console.log(row);
-    const newData = data;
-    newData.splice(data.length, 1, row);
-    this.setState({ data: newData, editingKey: key });
-    // console.log(newData);
-  };
   onFinish = (e) => {
     e.preventDefault();
-    console.log("我被调用了====onfinish");
+    // console.log("我被调用了====onfinish");
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        // console.log("Received values of form: ", values);
         this.props.search(values);
-        console.log("我只能被调用一次?");
+        // console.log("我只能被调用一次?");
+        this.props.form.resetFields();
       }
-      //   console.log("Received values of form: ", values);
-      //   this.props.search(values);
-      //   console.log("我只能被调用一次?");
-      //   if (!err) {
-      //     console.log("Received values of form: ", values);
-      //     this.props.search(values);
-      //     console.log("我只能被调用一次?");
-      //   }
     });
   };
   onFinishFailed = (errorInfo) => {
@@ -249,17 +267,15 @@ class EditableTable_new extends React.Component {
     console.log("Failed:", errorInfo);
   };
   render() {
-    // console.log(
-    //   "新的list值为: ----",
-    //   this.props.discovery_list,
-    //   this.state.editingKey
-    // );
     const components = {
       body: {
         cell: EditableCell,
       },
     };
-    const { discovery_list, discoveryLoading, form } = this.props;
+    console.log("editkey", this.state.editingKey, this.props.editingKey);
+    // console.log
+    const { student_qr_code_list, student_qr_codeLoading, form } = this.props;
+    // const { discovery_list, discoveryLoading, form } = this.props;
     const { getFieldDecorator } = this.props.form;
     const { modalvisible } = this.state;
     const columns = this.columns.map((col) => {
@@ -292,19 +308,13 @@ class EditableTable_new extends React.Component {
         >
           <Form>
             <Form.Item label="item_no">
-              {getFieldDecorator("item_no", {
-                rules: [{ required: true }],
-              })(<Input />)}
+              {getFieldDecorator("item_no")(<Input />)}
             </Form.Item>
             <Form.Item label="target_group_id">
-              {getFieldDecorator("target_group_id", {
-                rules: [{ required: true }],
-              })(<Input />)}
+              {getFieldDecorator("target_group_id")(<Input />)}
             </Form.Item>
             <Form.Item label="item_label">
-              {getFieldDecorator("item_label", {
-                rules: [{ required: true }],
-              })(<Input />)}
+              {getFieldDecorator("item_label")(<Input />)}
             </Form.Item>
           </Form>
         </Modal>
@@ -313,8 +323,8 @@ class EditableTable_new extends React.Component {
           <Table
             components={components}
             bordered
-            dataSource={discovery_list}
-            loading={discoveryLoading}
+            dataSource={student_qr_code_list}
+            loading={student_qr_codeLoading}
             columns={columns}
             rowClassName="editable-row"
             pagination={{
@@ -322,47 +332,53 @@ class EditableTable_new extends React.Component {
             }}
             rowKey="id"
           />
-          <Row gutter={12}>
-            <Col span={6}>
-              <Button
-                onClick={this.showModal}
-                type="primary"
-                style={{ marginBottom: 16 }}
-              >
-                添加一行
-              </Button>
-            </Col>
-            <Form onSubmit={this.onFinish}>
-              <Col span={5}>
-                <Form.Item>
-                  {getFieldDecorator("item_no_input", {
-                    rules: [{ required: true, message: "请输入item no" }],
-                  })(<Input placeholder="item_no" />)}
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item>
-                  <Button
-                    htmlType="submit"
-                    type="primary"
-                    style={{ marginBottom: 16 }}
-                  >
-                    搜索
-                  </Button>
-                </Form.Item>
-              </Col>
-            </Form>
-          </Row>
         </EditableContext.Provider>
+        <Row gutter={12}>
+          {/* <Col span={6}>
+            <Button
+              onClick={this.showModal}
+              type="primary"
+              style={{ marginBottom: 16 }}
+            >
+              添加一行
+            </Button>
+          </Col> */}
+          <Form onSubmit={this.onFinish}>
+            <Col span={5}>
+              <Form.Item>
+                {/* {getFieldDecorator("item_no_input", {
+                  rules: [{ required: true, message: "请输入item no" }],
+                })(<Input placeholder="item_no" />)} */}
+                {getFieldDecorator("item_no_input")(
+                  <Input placeholder="item_no" />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={5}>
+              <Form.Item>
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  style={{ marginBottom: 16 }}
+                >
+                  搜索
+                </Button>
+              </Form.Item>
+            </Col>
+          </Form>
+        </Row>
       </div>
     );
   }
 }
-
-const EditableFormTable = Form.create()(EditableTable_new);
+// StudentQrCodeEditTableForm
+const StudentQrCodeEditTable = Form.create()(StudentQrCodeEditTableForm);
 // export default connect(mapStateToProps)(EditableFormTable);
-export default connect(mapStateToProps, mapDispatchToProps)(EditableFormTable);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StudentQrCodeEditTable);
 
-EditableTable_new.propTypes = {
+StudentQrCodeEditTableForm.propTypes = {
   form: PropTypes.object,
 };

@@ -14,8 +14,8 @@ import {
   // Switch,
 } from "antd";
 import PropTypes from "prop-types";
-import { EditableContext } from "@/component/edit_table/TableContext";
-import EditableCell from "@/component/edit_table/EditableCell";
+import { EditableContext } from "@/component/sql_tool/live_studio/TableContext";
+import EditableCell from "@/component/sql_tool/live_studio/EditableCell";
 import { connect } from "dva";
 
 const namespace = "livestudio";
@@ -386,8 +386,14 @@ class LiveStudioEditTableForm extends React.Component {
 
   save = (id, form) => {
     //   const {editingKey} = this.state;
+    // const editingKey = this.state;
+    // console.log("在save 函数里，看下editkey的状态", editingKey);
+    // if (editingKey !== "") {
+    //   message.error("请先保存");
+    //   return;
+    // }
     this.props.save(id, form);
-    console.log("先调用我，再调用props里的dispatch函数-----");
+    // console.log("先调用我，再调用props里的dispatch函数-----");
     this.setState({ editingKey: "" });
     //this.forceUpdate();
     // this.props.onDidMount();
@@ -395,6 +401,12 @@ class LiveStudioEditTableForm extends React.Component {
     console.log("我被执行了?");
   };
   saveModal = () => {
+    // const editingKey = this.state;
+    // console.log("在save 函数里，看下editkey的状态", editingKey);
+    // if (editingKey !== "") {
+    //   message.error("请先保存");
+    //   return;
+    // }
     const {
       form: { validateFields },
     } = this.props;
@@ -441,6 +453,11 @@ class LiveStudioEditTableForm extends React.Component {
   };
 
   showModal = () => {
+    const { data, editingKey } = this.state;
+    if (editingKey !== "") {
+      message.error("请先保存");
+      return;
+    }
     this.setState({ modalvisible: true });
   };
 
@@ -449,26 +466,6 @@ class LiveStudioEditTableForm extends React.Component {
     this.setState({ editingKey: key });
   };
 
-  handleAdd = () => {
-    const { data, editingKey } = this.state;
-    if (editingKey !== "") {
-      message.error("请先保存");
-      return;
-    }
-    const key = new Date().toString();
-    const row = {
-      key,
-      name: "",
-      age: "",
-      address: "",
-    };
-    // console.log(data);
-    // console.log(row);
-    const newData = data;
-    newData.splice(data.length, 1, row);
-    this.setState({ data: newData, editingKey: key });
-    // console.log(newData);
-  };
   onFinish = (e) => {
     e.preventDefault();
     // console.log("我被调用了====onfinish");
@@ -491,7 +488,7 @@ class LiveStudioEditTableForm extends React.Component {
     //   this.props.discovery_list,
     //   this.state.editingKey
     // );
-    // console.log("editkey_in_live_studio=====", this.state.editingKey);
+    // console.log("editkey_in_ live_studio=====", this.state.editingKey);
     const components = {
       body: {
         cell: EditableCell,

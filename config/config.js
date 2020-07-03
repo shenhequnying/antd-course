@@ -48,7 +48,10 @@ export default {
         {
           path: "/sqltool",
           routes: [
-            { path: "/sqltool/discovery", component: "../pages/test2" },
+            {
+              path: "/sqltool/discovery",
+              component: "../pages/sqltool/discovery",
+            },
             {
               path: "/sqltool/livestudio",
               component: "../pages/sqltool/live_studio",
@@ -56,7 +59,8 @@ export default {
             // {path: '/sqltool/discovery', component: 'SqlTool/Discovery'},
             {
               path: "/sqltool/product_item",
-              component: "SqlTool/Product_Item",
+              component: "../pages/sqltool/student_qr_code",
+              // component: "SqlTool/Product_Item",
             },
           ],
         },

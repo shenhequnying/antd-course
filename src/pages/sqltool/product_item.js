@@ -8,6 +8,7 @@ function mapStateToProps(state) {
     //这里就是return model中获取的state到prop中
     product_item_list: state.product_item.product_item_list,
     product_itemLoading: state.loading.effects["product_item/queryList"],
+    editingKey: "",
   };
 }
 

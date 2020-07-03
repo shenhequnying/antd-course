@@ -39,8 +39,8 @@ class BaiscLayout extends Component {
           </div>
           {/*<div style={{height: '32px', background: 'rgba(255,255,255,.2)', margin: '16px'}}>SQL TOOL</div>*/}
           {/*<div className="logo">测试下</div>*/}
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-            <Menu.Item key="1">
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["3"]}>
+            <Menu.Item key="1" disabled={true}>
               <Link to="/helloWorld" />
               <Icon type="pie-chart" />
               <span>HelloWorld</span>

@@ -98,7 +98,7 @@ export default {
     },
     searchReducer(state, { payload: { livestudio_single } }) {
       //   console.log("我是reducer，我要看看state", state, discovery_single);
-      state.livestudio_list = return_livestudio_list;
+      state.livestudio_list = livestudio_single;
       return {
         ...state,
       };
