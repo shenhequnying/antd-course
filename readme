@@ -16,3 +16,9 @@ stuio_id 设计为可以进行简单的模糊搜索。
 3. 权限表
 4. 用户角色表 id userid roleid
 5. 角色权限表 id roleid privilegeid 
+
+student 表
+SELECT * FROM student WHERE nike_name LIKE '%魏%'
+修改phone 和user_id 字段
+然后根据规则:
+student_"{user_id}" 对redis/7 下删除key

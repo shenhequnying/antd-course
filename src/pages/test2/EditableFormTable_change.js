@@ -78,19 +78,43 @@ class EditableTable_new extends React.Component {
         title: "item_no",
         dataIndex: "item_no",
         width: "25%",
-        editable: true,
+        editable: false,
+        render: (text) => {
+          return {
+            props: {
+              style: { color: "blue" },
+            },
+            children: <div>{text}</div>,
+          };
+        },
       },
       {
         title: "target_group_id",
         dataIndex: "target_group_id",
         width: "15%",
         editable: true,
+        render: (text) => {
+          return {
+            props: {
+              style: { color: "green" },
+            },
+            children: <div>{text}</div>,
+          };
+        },
       },
       {
         title: "item_label",
         dataIndex: "item_label",
         width: "40%",
         editable: false,
+        render: (text) => {
+          return {
+            props: {
+              style: { color: "blue" },
+            },
+            children: <div>{text}</div>,
+          };
+        },
       },
       {
         title: "operation",

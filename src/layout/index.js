@@ -47,6 +47,7 @@ class BaiscLayout extends Component {
             </Menu.Item>
             <SubMenu
               key="sub1"
+              disabled={true}
               title={
                 <span>
                   <Icon type="dashboard" />

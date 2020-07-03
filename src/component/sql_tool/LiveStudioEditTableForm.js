@@ -147,7 +147,7 @@ class LiveStudioEditTableForm extends React.Component {
         },
       },
       {
-        title: "live_show_voucher",
+        title: "直播是否显示抵扣卷",
         dataIndex: "live_show_voucher",
         // render: (val) => (val ? "开" : "关"),
         width: "10%",
@@ -167,7 +167,7 @@ class LiveStudioEditTableForm extends React.Component {
         },
       },
       {
-        title: "live_singleday_rank_show",
+        title: "直/重播是否显示单日排行榜",
         dataIndex: "live_singleday_rank_show",
         // render: (val) => (val ? "开" : "关"),
         // width: "10%",
@@ -187,7 +187,7 @@ class LiveStudioEditTableForm extends React.Component {
         },
       },
       {
-        title: "replay_show_deposit",
+        title: "重播是否显示定金",
         dataIndex: "replay_show_deposit",
         // render: (val) => (val ? "开" : "关"),
         // width: "10%",
@@ -207,7 +207,7 @@ class LiveStudioEditTableForm extends React.Component {
         },
       },
       {
-        title: "live_auto_popup",
+        title: "直播是否自动弹框",
         dataIndex: "live_auto_popup",
         // render: (val) => (val ? "开" : "关"),
         // width: "10%",
@@ -227,7 +227,7 @@ class LiveStudioEditTableForm extends React.Component {
         },
       },
       {
-        title: "replay_show_coupon",
+        title: "重播是否显示优惠券",
         dataIndex: "replay_show_coupon",
         // render: (val) => (val ? "开" : "关"),
         // width: "10%",
@@ -247,7 +247,7 @@ class LiveStudioEditTableForm extends React.Component {
         },
       },
       {
-        title: "live_minimize",
+        title: "直播是否最小化",
         dataIndex: "live_minimize",
         // render: (val) => (val ? "开" : "关"),
         // width: "10%",
@@ -267,7 +267,7 @@ class LiveStudioEditTableForm extends React.Component {
         },
       },
       {
-        title: "replay_show_product",
+        title: "重播是否显示商品",
         dataIndex: "replay_show_product",
         // render: (val) => (val ? "开" : "关"),
         // width: "10%",
@@ -287,7 +287,27 @@ class LiveStudioEditTableForm extends React.Component {
         },
       },
       {
-        title: "replay_show_atmosphere",
+        title: "重播是否显示抵扣卷",
+        dataIndex: "replay_show_voucher",
+        // render: (val) => (val ? "开" : "关"),
+        width: "8%",
+        editable: true,
+        render: (text) => {
+          let check_default_value = true;
+          if ((text == null) | (text == 0)) {
+            check_default_value = false;
+          } else {
+            check_default_value = true;
+          }
+          return {
+            children: (
+              <Switch disabled={true} defaultChecked={check_default_value} />
+            ),
+          };
+        },
+      },
+      {
+        title: "重播是否显示氛围",
         dataIndex: "replay_show_atmosphere",
         // render: (val) => (val ? "开" : "关"),
         width: "8%",
@@ -306,6 +326,7 @@ class LiveStudioEditTableForm extends React.Component {
           };
         },
       },
+
       {
         title: "operation",
         dataIndex: "operation",
@@ -370,6 +391,7 @@ class LiveStudioEditTableForm extends React.Component {
     this.setState({ editingKey: "" });
     //this.forceUpdate();
     // this.props.onDidMount();
+    window.location.href = "/sqltool/livestudio";
     console.log("我被执行了?");
   };
   saveModal = () => {
@@ -559,7 +581,7 @@ class LiveStudioEditTableForm extends React.Component {
               )}
             </Form.Item>
 
-            <Form.Item label="live_show_voucher">
+            <Form.Item label="直播是否显示抵扣卷">
               {getFieldDecorator("live_show_voucher", {
                 valuePropName: "checked",
                 initialValue: false,
@@ -571,7 +593,7 @@ class LiveStudioEditTableForm extends React.Component {
                 />
               )}
             </Form.Item>
-            <Form.Item label="live_auto_popup">
+            <Form.Item label="直播是否自动弹框">
               {getFieldDecorator("live_auto_popup", {
                 valuePropName: "checked",
                 initialValue: false,
@@ -583,7 +605,7 @@ class LiveStudioEditTableForm extends React.Component {
                 />
               )}
             </Form.Item>
-            <Form.Item label="live_minimize">
+            <Form.Item label="直播是否最小化">
               {getFieldDecorator("live_minimize", {
                 valuePropName: "checked",
                 initialValue: false,
@@ -595,7 +617,7 @@ class LiveStudioEditTableForm extends React.Component {
                 />
               )}
             </Form.Item>
-            <Form.Item label="live_singleday_rank_show">
+            <Form.Item label="直/重播是否显示单日出勤排行榜">
               {getFieldDecorator("live_singleday_rank_show", {
                 valuePropName: "checked",
                 initialValue: false,
@@ -607,7 +629,7 @@ class LiveStudioEditTableForm extends React.Component {
                 />
               )}
             </Form.Item>
-            <Form.Item label="replay_show_atmosphere">
+            <Form.Item label="重播是否显示氛围">
               {getFieldDecorator("replay_show_atmosphere", {
                 valuePropName: "checked",
                 initialValue: false,
@@ -619,7 +641,7 @@ class LiveStudioEditTableForm extends React.Component {
                 />
               )}
             </Form.Item>
-            <Form.Item label="replay_show_coupon">
+            <Form.Item label="重播是否显示优惠券">
               {getFieldDecorator("replay_show_coupon", {
                 valuePropName: "checked",
                 initialValue: false,
@@ -631,7 +653,7 @@ class LiveStudioEditTableForm extends React.Component {
                 />
               )}
             </Form.Item>
-            <Form.Item label="replay_show_deposit">
+            <Form.Item label="重播是否显示定金">
               {getFieldDecorator("replay_show_deposit", {
                 valuePropName: "checked",
                 initialValue: false,
@@ -643,7 +665,19 @@ class LiveStudioEditTableForm extends React.Component {
                 />
               )}
             </Form.Item>
-            <Form.Item label="replay_show_product">
+            <Form.Item label="重播是否显示抵扣卷">
+              {getFieldDecorator("replay_show_voucher", {
+                valuePropName: "checked",
+                initialValue: false,
+              })(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  // defaultChecked={check_default_value}
+                />
+              )}
+            </Form.Item>
+            <Form.Item label="重播是否显示商品">
               {getFieldDecorator("replay_show_product", {
                 valuePropName: "checked",
                 initialValue: false,

@@ -73,6 +73,7 @@ class EditableCell extends React.Component {
       "replay_show_coupon",
       "replay_show_deposit",
       "replay_show_product",
+      "replay_show_voucher",
     ];
     if (switchType.includes(dataIndex)) {
       // const x_value = this.props.record;
@@ -123,7 +124,7 @@ class EditableCell extends React.Component {
                   message: `Please Input ${title}!`,
                 },
               ],
-              // valuePropName: "checked",
+              // valuePropName: dataIndex,
               initialValue: record[dataIndex],
             })(this.getInput(dataIndex))}
           </FormItem>
